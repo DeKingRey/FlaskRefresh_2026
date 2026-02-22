@@ -1,3 +1,371 @@
+/* I used AI for all the CSS */
+
+/* =========================
+   Stardew Valley Theme
+========================= */
+
+:root {
+    --cream: #E6CFA3;
+    --light-brown: #DDBB85;
+    --medium-brown: #B8733F;
+    --dark-blue: #714828;
+    --sky-blue: #3585D6;
+    --leaf-green: #4E8F3A;
+    --soft-white: #F8F4EC;
+}
+
+@font-face {
+    font-family: stardew-valley-text;
+    src: url(/static/css/stardew-item-font.otf);
+}
+
+@font-face {
+    font-family: stardew-valley-heading;
+    src: url(/static/css/Stardew-Valley-Regular.ttf);
+}
+
+/* =========================
+   Global
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'stardew-valley-text';
+    background-color: var(--soft-white);
+    color: var(--dark-blue);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    font-size: 1.2rem;
+}
+
+/* =========================
+   Header (Wooden Sign Style)
+========================= */
+
 header {
-    font-size: 50px;
+    font-family: 'stardew-valley-heading';
+    background-color: var(--light-brown);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    border-bottom: 5px solid var(--medium-brown);
+    box-shadow: 0 4px 0 var(--medium-brown);
+}
+
+/* =========================
+   Navbar
+========================= */
+
+.navbar {
+    background-color: var(--cream);
+    padding: 12px 0;
+    border-bottom: 3px solid var(--medium-brown);
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: var(--dark-blue);
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: 0.2s ease;
+}
+
+.navbar a:hover {
+    background-color: var(--leaf-green);
+    color: white;
+}
+
+/* =========================
+   Search Bar
+========================= */
+
+.search-wrapper {
+    position: relative;
+}
+
+/* Input */
+.search-wrapper input {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 2px solid var(--medium-brown);
+    background-color: white;
+    outline: none;
+}
+
+/* Input focus styling */
+.search-wrapper input:focus {
+    border-color: var(--leaf-green);
+}
+
+/* Suggestions Container */
+.suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 150px; /* fixed width */
+    background: white;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 2px solid var(--medium-brown);
+    border-top: none; /* avoid double border with input */
+    border-radius: 0 0 12px 12px;
+    max-height: 220px; /* allow scrolling if too tall */
+    overflow-y: auto; /* show scrollbar if needed */
+    z-index: 10;
+
+    /* Stack vertically */
+    display: none; /* hidden by default */
+}
+
+/* Show suggestions only when input is focused */
+.search-wrapper input:focus + .suggestions,
+.search-wrapper input:focus ~ .suggestions {
+    display: block;
+}
+
+/* Suggestion Items */
+.suggestions li {
+    background-color: var(--cream);
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--dark-blue);
+    transition: 0.2s ease;
+    white-space: nowrap; /* keeps items single-line */
+    border-bottom: 1px solid var(--medium-brown);
+}
+
+/* Last item border */
+.suggestions li:last-child {
+    border-bottom: none;
+}
+
+/* Hover effect */
+.suggestions li:hover {
+    background-color: var(--leaf-green);
+    color: white;
+}
+
+/* =========================
+   Main Content
+========================= */
+
+main {
+    flex: 1;
+    width: 80%;
+    max-width: 900px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Recipe Links */
+
+main p {
+    margin: 10px 0;
+}
+
+main a {
+    text-decoration: none;
+    color: var(--medium-brown);
+    font-weight: bold;
+    transition: 0.2s ease;
+}
+
+main a:hover {
+    color: var(--leaf-green);
+}
+
+/* =========================
+   Buttons
+========================= */
+
+button, input[type="submit"] {
+    background-color: var(--leaf-green);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: var(--dark-blue);
+}
+
+/* =========================
+   Footer
+========================= */
+
+footer {
+    background-color: var(--light-brown);
+    text-align: center;
+    padding: 10px;
+    color: white;
+    border-top: 4px solid var(--medium-brown);
+    font-size: 2rem;
+}
+
+/* =========================
+   Recipe Page Styles
+========================= */
+
+.recipe-title {
+    font-family: 'stardew-valley-heading';
+    font-size: 2.5rem;
+    color: var(--dark-blue);
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+
+.status-dropdown {
+    padding: 8px 14px;
+    font-size: 1.5rem;
+    border-radius: 6px;
+    border: 2px solid var(--medium-brown);
+    background-color: var(--cream);
+    color: var(--dark-blue);
+    margin-bottom: 20px;
+    transition: 0.2s ease;
+
+    font-family: 'stardew-valley-text';
+}
+
+.status-dropdown:hover {
+    border-color: var(--leaf-green);
+}
+
+.ingredients-section {
+    margin-top: 25px;
+}
+
+.ingredients-section h2 {
+    font-family: 'stardew-valley-heading';
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+    color: var(--dark-blue);
+}
+
+.ingredients-section p {
+    margin: 6px 0;
+    padding: 6px 10px;
+    background-color: var(--soft-white);
+    border-left: 4px solid var(--medium-brown);
+    border-radius: 4px;
+    font-size: 1.1rem;
+    width: 20%;
+}
+
+.return-home {
+    display: inline-block;
+    margin-top: 25px;
+    text-decoration: none;
+    padding: 8px 14px;
+    background-color: var(--leaf-green);
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.2s ease;
+}
+
+.return-home:hover {
+    background-color: var(--dark-blue);
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .recipe-title {
+        font-size: 2rem;
+    }
+
+    .ingredients-section p {
+        font-size: 1rem;
+    }
+
+    .status-dropdown {
+        width: 100%;
+    }
+}
+
+/* =========================
+   Divider
+========================= */
+
+.divider {
+    width: 100%;
+    height: 5px; /* thickness of the line */
+    background-color: var(--medium-brown); /* earthy brown */
+    margin: 20px 0; /* spacing above and below */
+    border-radius: 5px; /* slightly rounded edges for softness */
+}
+
+.divider.dashed {
+    background-color: transparent;
+    border-top: 2px dashed var(--medium-brown);
+}
+
+.divider.dotted {
+    background-color: transparent;
+    border-top: 2px dotted var(--medium-brown);
+}
+
+/* =========================
+   Recipe List Styles
+========================= */
+
+.recipe-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* space between items */
+    margin-top: 20px;
+}
+
+.recipe-list p {
+    margin: 0; /* remove default margin */
+}
+
+.recipe-list a {
+    display: block;
+    padding: 10px 14px;
+    background-color: var(--cream);
+    color: var(--dark-blue);
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 2px solid var(--medium-brown);
+    transition: 0.2s ease;
+    box-shadow: 0 3px 0 var(--medium-brown); /* subtle 3D effect */
+}
+
+.recipe-list a:hover {
+    background-color: var(--leaf-green);
+    color: white;
+    box-shadow: 0 3px 0 var(--dark-blue);
+    transform: translateY(-2px);
 }

@@ -10,8 +10,47 @@
         <a href="{{ url_for('register') }}">Register</a>
     {% endif %}
 
-    {% for recipe in recipes %}
-        <p><a href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a></p>
-    {% endfor %}
+    <div class="divider"></div>
+
+    <div class="recipe-list">
+        {% for recipe in recipes %}
+            <div class="recipe-item">
+                <a href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a>
+                {% if current_user.is_authenticated %}
+                    <select class="status-dropdown" data-recipe-id="{{ recipe.id }}">
+                        {% for value, label in status_choices.items() %}
+                            <option value="{{ value }}" {% if status_by_recipe[recipe.id] == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        // Go through each dropdown
+        // if an option is selected
+        // update the database/send post to flask
+
+        document.querySelectorAll(".status-dropdown").forEach(dropdown => {
+            dropdown.addEventListener("change", function() {
+                const recipeId = this.dataset.recipeId;
+                const newStatus = parseInt(this.value);
+                
+                fetch("/update-recipe-status", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id: recipeId,
+                        status: newStatus
+                    })
+                })
+            })
+        })
+    </script>
 
 {% endblock %}

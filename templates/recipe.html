@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <h1>{{ recipe.name }}</h1>
+    <h1 class="recipe-title">{{ recipe.name }}</h1>
+    <div class="divider"></div>
 
     {% if current_user.is_authenticated %}
         <select class="status-dropdown", data-recipe-id="{{ recipe.id }}">
@@ -20,12 +21,14 @@
         </p>
     {% endif %}
     
-    <h2>Ingredients</h2>
-    {% for ingredient in recipe.ingredients %}
-        <p>{{ ingredient.name }}</p>
-    {% endfor %}
+    <div class="ingredients-section">
+        <h2>Ingredients</h2>
+        {% for ingredient in recipe.ingredients %}
+            <p>{{ ingredient.name }}</p>
+        {% endfor %}
+    </div>
 
-    <a href="{{ url_for('home') }}">Return to Home</a>
+    <a href="{{ url_for('home') }}" class="return-home">Return to Home</a>
 
     
     <script>

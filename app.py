@@ -98,14 +98,16 @@ def home():
 @login_required
 def dashboard():
     # Gets the information for the users recipe tracking (numbers)
+    cooked_amount = RecipeAccount.query.filter_by(
+            status=COOKED).count()
+    owned_amount = RecipeAccount.query.filter_by(
+            status=OWNED).count() + cooked_amount
+
     account_recipes = {
         "total": Recipe.query.count(),
-        "unowned": RecipeAccount.query.filter_by(
-            status=ZERO).count(),
-        "owned": RecipeAccount.query.filter_by(
-            status=OWNED).count(),
-        "cooked": RecipeAccount.query.filter_by(
-            status=COOKED).count(),
+        "unowned": Recipe.query.count() - owned_amount,
+        "owned": owned_amount,
+        "cooked": cooked_amount,
         "recipes": get_recipes()
     }
 
