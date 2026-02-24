@@ -78,6 +78,8 @@ header {
     justify-content: center;
     align-items: center;
     gap: 30px;
+
+    font-size: 1.5rem;
 }
 
 .navbar a {
@@ -109,6 +111,9 @@ header {
     border: 2px solid var(--medium-brown);
     background-color: white;
     outline: none;
+
+    font-family: 'stardew-valley-text';
+    font-size: 1.5rem;
 }
 
 /* Input focus styling */
@@ -121,20 +126,20 @@ header {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 150px; /* fixed width */
+    width: 100%; /* fixed width */
     background: white;
     list-style: none;
     padding: 0;
     margin: 0;
     border: 2px solid var(--medium-brown);
-    border-top: none; /* avoid double border with input */
+    border-top: none; 
     border-radius: 0 0 12px 12px;
-    max-height: 220px; /* allow scrolling if too tall */
-    overflow-y: auto; /* show scrollbar if needed */
+    max-height: 220px; 
+    overflow-y: auto; 
     z-index: 10;
 
     /* Stack vertically */
-    display: none; /* hidden by default */
+    display: none;
 }
 
 /* Show suggestions only when input is focused */
@@ -146,10 +151,12 @@ header {
 /* Suggestion Items */
 .suggestions li {
     background-color: var(--cream);
-    padding: 6px 12px;
+    padding: 12px 20px;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: bold;
+    text-align: center;
+
     color: var(--dark-blue);
     transition: 0.2s ease;
     white-space: nowrap; /* keeps items single-line */
@@ -251,7 +258,6 @@ footer {
     border: 2px solid var(--medium-brown);
     background-color: var(--cream);
     color: var(--dark-blue);
-    margin-bottom: 20px;
     transition: 0.2s ease;
 
     font-family: 'stardew-valley-text';
@@ -342,16 +348,24 @@ footer {
 .recipe-list {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* space between items */
+    gap: 12px;
     margin-top: 20px;
+
+    align-items: center;
 }
 
-.recipe-list p {
-    margin: 0; /* remove default margin */
+.recipe-item {
+    display: flex;
+    align-items: stretch;   /* makes both same height */
+    justify-content: space-between;
+    gap: 12px;
+
+    width: 50%;
+    margin-bottom: 20px;
 }
 
-.recipe-list a {
-    display: block;
+.recipe-item a {
+    flex: 1; /* takes remaining space */
     padding: 10px 14px;
     background-color: var(--cream);
     color: var(--dark-blue);
@@ -360,12 +374,39 @@ footer {
     text-decoration: none;
     border: 2px solid var(--medium-brown);
     transition: 0.2s ease;
-    box-shadow: 0 3px 0 var(--medium-brown); /* subtle 3D effect */
+    box-shadow: 0 3px 0 var(--medium-brown);
 }
 
-.recipe-list a:hover {
+.recipe-item a:hover {
     background-color: var(--leaf-green);
     color: white;
     box-shadow: 0 3px 0 var(--dark-blue);
     transform: translateY(-2px);
+}
+
+/* Dropdown styling */
+.status-dropdown {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 2px solid var(--medium-brown);
+    background-color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 0 var(--medium-brown);
+    transition: 0.2s ease;
+}
+
+.status-dropdown:hover {
+    border-color: var(--leaf-green);
+}
+
+/* Hidden toggleable lists */
+.toggle {
+    display: none;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: 10px;
+    background-color: var(--light-brown);
+    border-radius: 8px;
+    width: 50%;
 }

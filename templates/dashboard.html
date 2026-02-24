@@ -8,16 +8,78 @@
     <div class="unowned">
         <h2>Unowned Recipes</h2>
         <h3>{{ account_recipes.unowned }}/{{ account_recipes.total }}</h3>
+        <button class="toggle-button" onclick="toggleInfo(this, 'block')" style="top: 15px;">></button>
+    </div>
+
+    <!-- Toggleable unowned recipe list -->
+    <div class="recipe-list toggle">
+        {% for recipe in recipes %}
+            {% if recipe.status == 0 %}
+                <div class="recipe-item">
+                    <a href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a>
+
+                    <select class="status-dropdown" data-recipe-id="{{ recipe.id }}" data-status-id="{{ recipe.status }}">
+                        {% for value, label in status_choices.items() %}
+                            <option value="{{ value }}" {% if recipe.status == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 
     <div class="owned">
         <h2>Owned Recipes</h2>
         <h3>{{ account_recipes.owned }}/{{ account_recipes.total }}</h3>
+        <button class="toggle-button" onclick="toggleInfo(this, 'block')" style="top: 15px;">></button>
+    </div>
+
+    <!-- Toggleable owned recipe list -->
+    <div class="recipe-list toggle">
+        {% for recipe in recipes %}
+            {% if recipe.status == 1 %}
+                <div class="recipe-item">
+                    <a href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a>
+
+                    <select class="status-dropdown" data-recipe-id="{{ recipe.id }}" data-status-id="{{ recipe.status }}">
+                        {% for value, label in status_choices.items() %}
+                            <option value="{{ value }}" {% if recipe.status == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 
     <div class="cooked">
         <h2>Cooked Recipes</h2>
         <h3>{{ account_recipes.cooked }}/{{ account_recipes.total }}</h3>
+        <button class="toggle-button" onclick="toggleInfo(this, 'block')" style="top: 15px;">></button>
     </div>
 
+    <!-- Toggleable cooked recipe list -->
+    <div class="recipe-list toggle">
+        {% for recipe in recipes %}
+            {% if recipe.status == 2 %}
+                <div class="recipe-item">
+                    <a href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a>
+
+                    <select class="status-dropdown" data-recipe-id="{{ recipe.id }}" data-status-id="{{ recipe.status }}">
+                        {% for value, label in status_choices.items() %}
+                            <option value="{{ value }}" {% if recipe.status == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <script src="/static/js/toggle-dropdown.js"></script>
+    <script src="/static/js/update-status.js"></script>
 {% endblock %}

@@ -77,7 +77,8 @@ class LoginForm(FlaskForm):
 @app.context_processor
 def inject_info():
     return {
-        "recipes": get_recipes()
+        "recipes": get_recipes(),
+        "status_choices": STATUS_CHOICES
     }
 
 
@@ -97,7 +98,7 @@ def home():
 @app.route("/dashboard")
 @login_required
 def dashboard():
-    # Gets the information for the users recipe tracking (numbers)
+    # Gets the information for the users recipe tracking (as numbers)
     cooked_amount = RecipeAccount.query.filter_by(
             status=COOKED).count()
     owned_amount = RecipeAccount.query.filter_by(
@@ -120,6 +121,7 @@ def dashboard():
 def recipe(id):
     recipe = Recipe.query.get_or_404(id)
 
+    # Tries to get status, if null then zero (unowned)
     status = ZERO
     if current_user.is_authenticated:
         link = RecipeAccount.query.filter_by(
@@ -130,7 +132,6 @@ def recipe(id):
         status = link.status if link else ZERO
 
     return render_template("recipe.html", recipe=recipe,
-                           status_choices=STATUS_CHOICES,
                            status=status)
 
 
@@ -168,6 +169,7 @@ def update_recipe_status():
 def login():
     form = LoginForm()
 
+    # Logs in user if validated succesfully
     if form.validate_on_submit():
         user = Account.query.filter_by(username=form.username.data).first()
         if user:
@@ -208,8 +210,29 @@ def logout():
 
 def get_recipes():
     recipes = Recipe.query.all()
-    recipes_data = [recipe.to_dict() for recipe in recipes]
-    return recipes_data
+    recipes_data = []
+
+    # Adds each recipe and its data as a dict to a list
+    for recipe in recipes:
+        recipe_dict = recipe.to_dict()
+
+        # Gets the recipe status, if null it is zero (unowned)
+        status = ZERO
+        if (current_user.is_authenticated):
+            link = RecipeAccount.query.filter_by(
+                recipe_id=recipe.id,
+                account_id=current_user.id
+            ).first()
+
+            status = link.status if link else ZERO
+
+        recipe_dict["status"] = status
+        recipes_data.append(recipe_dict)
+
+    # Sorts recipes by status
+    sorted_recipes = sorted(recipes_data,
+                            key=lambda recipe: recipe["status"], reverse=True)
+    return sorted_recipes
 
 
 if __name__ == "__main__":
